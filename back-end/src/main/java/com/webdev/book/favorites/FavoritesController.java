@@ -14,18 +14,21 @@ public class FavoritesController {
     }
 
     /*Get all results*/
+    @CrossOrigin
     @GetMapping("/favorites")
     public List<Favorites> getAllEntries() {
         return favoritesRepo.findAll();
     }
 
     /*Post a new favorite*/
+    @CrossOrigin
     @PostMapping("/favorites")
     public Favorites newFavorite(@RequestBody Favorites newFavorite){
         return favoritesRepo.save(newFavorite);
     }
 
     /*Edit a field of a certain object in the DB */
+    @CrossOrigin
     @PutMapping("/favorites/{id}")
     Favorites replaceFavorite(@RequestBody Favorites newFavorites, @PathVariable String id) {
 
@@ -42,6 +45,7 @@ public class FavoritesController {
                 });
     }
 
+    @CrossOrigin
     @PutMapping("/favorites/{id}/{field}")
     Favorites replaceFavoriteField(@RequestBody Favorites newFavorites, @PathVariable String id,@PathVariable String field) {
         return favoritesRepo.findById(id)
@@ -59,12 +63,14 @@ public class FavoritesController {
     }
 
     /*Delete a whole object in the DB */
+    @CrossOrigin
     @DeleteMapping("/favorites/{id}")
     void deleteFavorite(@PathVariable String id) {
         favoritesRepo.deleteById(id);
     }
 
     /*Delete a whole object in the DB */
+    @CrossOrigin
     @DeleteMapping("/favorites/{id}/{field}")
     Favorites deleteFavoriteField(@RequestBody Favorites newFavorites, @PathVariable String id,@PathVariable String field) {
         return favoritesRepo.findById(id)
