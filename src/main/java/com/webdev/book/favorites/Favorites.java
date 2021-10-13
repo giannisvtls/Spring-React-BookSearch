@@ -2,8 +2,6 @@ package com.webdev.book.favorites;
 
 import org.springframework.data.annotation.Id;
 
-import java.time.LocalDate;
-
 public class Favorites {
 
     @Id
@@ -78,7 +76,6 @@ public class Favorites {
                 ", workid='" + workid + '\'' +
                 ", author='" + author + '\'' +
                 ", title='" + title + '\'' +
-                ", review='" + review + '\'' +
                 '}';
     }
 }

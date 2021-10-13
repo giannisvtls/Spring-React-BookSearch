@@ -9,7 +9,6 @@ public class BookApplication {
 
 	@Autowired
 	public static void main(String[] args) {
-
 		SpringApplication.run(BookApplication.class, args);
 	}
 }

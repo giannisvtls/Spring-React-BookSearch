@@ -6,9 +6,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/")
-
 public class FavoritesController {
-    private Repository favoritesRepo;
+    private final Repository favoritesRepo;
 
     public FavoritesController(Repository favoritesRepo) {
         this.favoritesRepo = favoritesRepo;
