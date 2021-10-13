@@ -11,7 +11,8 @@ const Results = () => {
     const [isError, setIsError] = useState(false);
 
     const fetchData = () => {
-        fetch('https://reststop.randomhouse.com/resources/works?start=0&max=20&expandLevel=1&search=' + encodeURIComponent(userKeyword), {
+        console.log(userKeyword)
+        fetch('https://reststop.randomhouse.com/resources/works?start=0&max=10&expandLevel=1&search=' + encodeURIComponent(userKeyword), {
         headers: {
             'Accept': 'application/json'}
         })
@@ -27,7 +28,7 @@ const Results = () => {
 
     useEffect(() => {
         fetchData();
-    });
+    }, []);
 
     return (
         <>
