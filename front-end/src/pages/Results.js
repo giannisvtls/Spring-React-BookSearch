@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect} from 'react'
 import { useLocation } from "react-router-dom";
 import Result from '../components/Result';
 import SearchBar from '../components/SearchBar';
@@ -6,29 +6,29 @@ import SearchBar from '../components/SearchBar';
 const Results = () => {
     const location = useLocation();
     const userKeyword = location.state;
-
     const [books, setBooks] = useState([]);
     const [isError, setIsError] = useState(false);
 
-    const fetchData = () => {
-        console.log(userKeyword)
-        fetch('https://reststop.randomhouse.com/resources/works?start=0&max=10&expandLevel=1&search=' + encodeURIComponent(userKeyword), {
-        headers: {
-            'Accept': 'application/json'}
-        })
-        .then(res => res.json())
-        .then((data) => {
-            setBooks(data);
-        })
-        .catch((error) => {
+    const fetchData = async () => {
+        try {
+            const res = await fetch('https://reststop.randomhouse.com/resources/works?start=0&max=10&expandLevel=1&search=' + encodeURIComponent(userKeyword), {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            const data = await res.json();
+            console.log(data)
+            if(data.work !== undefined) setBooks(data);
+            if(data.work === undefined) setBooks(['0'])
+        } catch (error) {
             setIsError(true);
             console.log(error);
-        });
+        };
     };
-
-    useEffect(() => {
-        fetchData();
-    }, []);
+    useEffect(() => {  
+        fetchData()
+        // eslint-disable-next-line
+    }, [userKeyword]);
 
     return (
         <>

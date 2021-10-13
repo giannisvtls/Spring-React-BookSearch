@@ -1,12 +1,15 @@
 import React from 'react'
 import { FaSearch } from 'react-icons/fa'
-import {useHistory} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
 
 const SearchBar = ({ title }) => {
     const history = useHistory();
+    const location = useLocation();
 
     const handleOnClick = (e) => {
-        history.push('/results', e.target[0].value);
+        if(location.pathname !== '/results') history.push('/results', e.target[0].value);
+        e.preventDefault()
+        history.push('/results', e.target[0].value)
     }
     return (
         <form id='search-center' className='search' name='search-form' onSubmit={handleOnClick} >
