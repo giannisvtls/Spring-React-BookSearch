@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import Result from '../components/Result';
 import SearchBar from '../components/SearchBar';
 
-const Results = () => {
+const Results = ({deleteFavorite , addFavorite}) => {
     const location = useLocation();
     const userKeyword = location.state;
     const [books, setBooks] = useState([]);
@@ -17,7 +17,6 @@ const Results = () => {
                 }
             });
             const data = await res.json();
-            console.log(data)
             if(data.work !== undefined) setBooks(data);
             if(data.work === undefined) setBooks(['0'])
         } catch (error) {
@@ -33,7 +32,7 @@ const Results = () => {
     return (
         <>
         <article id="title-list">
-            {books && <Result data={books} />}
+            {books && <Result data={books} deleteFavorite={deleteFavorite} addFavorite={addFavorite}/>}
             {isError && <div>Error fetching data.</div>}
         </article>
         <aside id='sidebar-aside'>

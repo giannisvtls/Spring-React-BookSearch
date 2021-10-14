@@ -6,17 +6,38 @@ import Search from './pages/Search';
 import Favorites from './pages/Favorites';
 import Results from './pages/Results';
 
-const App = () => {
 
+const App = () => {
+    const deleteFavorite = (id) => {
+        fetch(`http://localhost:8080/api/favorites/${id}`, {
+            method: 'DELETE'
+        }).then(()=>window.location.reload())
+        
+    }
+
+    const addFavorite = (item) => {
+        fetch('http://localhost:8080/api/favorites', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                action: 'add',
+                workid: item.workid, 
+                title: item.titleweb,
+                author: item.authorweb
+            })
+        }).then(()=>window.location.reload())
+    }
     return (
         <Router>
             <Header />
                 <Switch>
                     <Route path='/results'>
-                        <Results />
+                        <Results deleteFavorite={deleteFavorite} addFavorite={addFavorite}/>
                     </Route>
                     <Route path='/favorites'>
-                        <Favorites />
+                        <Favorites deleteFavorite={deleteFavorite}/>
                     </Route>
                     <Route path='/'>
                         <Search />

@@ -66,7 +66,7 @@ public class FavoritesController {
     @CrossOrigin
     @DeleteMapping("/favorites/{id}")
     void deleteFavorite(@PathVariable String id) {
-        favoritesRepo.deleteById(id);
+        favoritesRepo.deleteByWorkid(id);
     }
 
     /*Delete a whole object in the DB */

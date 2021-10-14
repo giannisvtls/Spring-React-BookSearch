@@ -72,6 +72,9 @@ img {
   align-self: flex-end;
 }
 
+#fav-list{
+  grid-area: main;
+}
 .book-container{
   background-size: cover;
   background-position: center;

@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react'
 import SearchBar from '../components/SearchBar'
 import FavoriteList from '../components/FavoriteList'
 
-const Favorites = () => {
+const Favorites = ({deleteFavorite}) => {
     const [favorites, setFavorites] = useState([]);
     const [isError, setIsError] = useState(false);
 
@@ -15,7 +15,6 @@ const Favorites = () => {
                 }
             });
             const data = await res.json();
-            console.log(data)
             setFavorites(data)
         } catch (error) {
             setIsError(true);
@@ -27,10 +26,17 @@ const Favorites = () => {
         // eslint-disable-next-line
     }, []);
 
+    const editFavorites = (e) => {
+        console.log(e)
+    }
+
+    const deleteValue = (e) =>{
+        console.log(e)
+    }
     return (
         <>
         <article id="fav-list">
-            {favorites && <FavoriteList data={favorites} />}
+            {favorites && <FavoriteList data={favorites} editFavorites={editFavorites} deleteValue={deleteValue} deleteFavorite={deleteFavorite}/>}
             {isError && <div>Error fetching data.</div>}
         </article>
         <aside id='sidebar-aside'>

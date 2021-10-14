@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface Repository extends MongoRepository<Favorites, String>{
 
-    //public List<Favorites> findByWorkid(String workid);
+    void deleteByWorkid(String workid);
 
     //public List<Favorites> findByAuthor(String author);
 
