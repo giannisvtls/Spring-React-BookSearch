@@ -22,7 +22,6 @@ const App = () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                action: 'add',
                 workid: item.workid, 
                 title: item.titleweb,
                 author: item.authorweb

@@ -8,14 +8,16 @@ const Favorites = ({deleteFavorite}) => {
 
     const fetchData = async () => {
         try {
-            const res = await fetch('http://localhost:8080/api/favorites', {
+            fetch('http://localhost:8080/api/favorites', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
                 }
+            })
+            .then((res)=> res.json())
+            .then(data => {
+                setFavorites(data)
             });
-            const data = await res.json();
-            setFavorites(data)
         } catch (error) {
             setIsError(true);
             console.log(error);
@@ -25,18 +27,29 @@ const Favorites = ({deleteFavorite}) => {
         fetchData()
         // eslint-disable-next-line
     }, []);
-
-    const editFavorites = (e) => {
-        console.log(e)
-    }
-
-    const deleteValue = (e) =>{
-        console.log(e)
+    const deleteValue = (item, field) =>{
+        console.log(item)
+        console.log(field)
+        if(field === 'author') item.author = '';
+        if(field === 'title') item.title = '';
+        fetch(`http://localhost:8080/api/favorites/${item.workid}/${field}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                workid: item.workid, 
+                title: item.titleweb,
+                author: item.authorweb
+            })
+        })
+        .then(response => response.json())
+        .then(() => window.location.reload());
     }
     return (
         <>
         <article id="fav-list">
-            {favorites && <FavoriteList data={favorites} editFavorites={editFavorites} deleteValue={deleteValue} deleteFavorite={deleteFavorite}/>}
+            {favorites && <FavoriteList data={favorites} deleteValue={deleteValue} deleteFavorite={deleteFavorite}/>}
             {isError && <div>Error fetching data.</div>}
         </article>
         <aside id='sidebar-aside'>

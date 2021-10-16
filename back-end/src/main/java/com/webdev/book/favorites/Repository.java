@@ -8,7 +8,7 @@ public interface Repository extends MongoRepository<Favorites, String>{
 
     void deleteByWorkid(String workid);
 
-    //public List<Favorites> findByAuthor(String author);
+    Favorites findByWorkid(String workid);
 
     //public List<Favorites> findByTitle(String title);
 }

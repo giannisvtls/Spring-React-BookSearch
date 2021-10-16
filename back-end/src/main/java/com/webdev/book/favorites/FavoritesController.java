@@ -27,39 +27,29 @@ public class FavoritesController {
         return favoritesRepo.save(newFavorite);
     }
 
-    /*Edit a field of a certain object in the DB */
     @CrossOrigin
-    @PutMapping("/favorites/{id}")
-    Favorites replaceFavorite(@RequestBody Favorites newFavorites, @PathVariable String id) {
-
-        return favoritesRepo.findById(id)
-                .map(fav -> {
-                    fav.setAuthor(newFavorites.getAuthor());
-                    fav.setTitle(newFavorites.getTitle());
-                    fav.setWorkid(newFavorites.getId());
-                    return favoritesRepo.save(fav);
-                })
-                .orElseGet(() -> {
-                    newFavorites.setId(id);
-                    return favoritesRepo.save(newFavorites);
-                });
+    @PostMapping("/favorites/{id}")
+    public Favorites editFavoriteValues(@RequestBody Favorites newFavorites, @PathVariable String id) {
+        Favorites fav =  favoritesRepo.findByWorkid(id);
+        if(!newFavorites.getAuthor().equals("")) fav.setAuthor(newFavorites.getAuthor());
+        if(!newFavorites.getTitle().equals(""))fav.setTitle(newFavorites.getTitle());
+        if(!newFavorites.getReview().equals(""))fav.setReview(newFavorites.getReview());
+        return favoritesRepo.save(fav);
     }
 
     @CrossOrigin
     @PutMapping("/favorites/{id}/{field}")
-    Favorites replaceFavoriteField(@RequestBody Favorites newFavorites, @PathVariable String id,@PathVariable String field) {
-        return favoritesRepo.findById(id)
-                .map(fav -> {
-                    if(field.equals("author")) fav.setAuthor(newFavorites.getAuthor());
-                    if(field.equals("title")) fav.setTitle(newFavorites.getTitle());
-                    if(field.equals("review")) fav.setReview(newFavorites.getReview());
-
-                    return favoritesRepo.save(fav);
-                })
-                .orElseGet(() -> {
-                    newFavorites.setId(id);
-                    return favoritesRepo.save(newFavorites);
-                });
+    Favorites replaceFavoriteField(@RequestBody Favorites newFavorites, @PathVariable String id, @PathVariable String field) {
+        Favorites fav =  favoritesRepo.findByWorkid(id);
+        if(field.equals("author")) fav.setAuthor(newFavorites.getAuthor());
+        if(field.equals("title")) fav.setTitle(newFavorites.getTitle());
+        if(field.equals("review"))fav.setReview(newFavorites.getReview());
+        if(field.equals("edit")){
+            if(!newFavorites.getAuthor().equals("")) fav.setAuthor(newFavorites.getAuthor());
+            if(!newFavorites.getTitle().equals(""))fav.setTitle(newFavorites.getTitle());
+            if(!newFavorites.getReview().equals(""))fav.setReview(newFavorites.getReview());
+        }
+        return favoritesRepo.save(fav);
     }
 
     /*Delete a whole object in the DB */
@@ -67,23 +57,5 @@ public class FavoritesController {
     @DeleteMapping("/favorites/{id}")
     void deleteFavorite(@PathVariable String id) {
         favoritesRepo.deleteByWorkid(id);
-    }
-
-    /*Delete a whole object in the DB */
-    @CrossOrigin
-    @DeleteMapping("/favorites/{id}/{field}")
-    Favorites deleteFavoriteField(@RequestBody Favorites newFavorites, @PathVariable String id,@PathVariable String field) {
-        return favoritesRepo.findById(id)
-                .map(fav -> {
-                    if(field.equals("author")) fav.setAuthor("");
-                    if(field.equals("title")) fav.setTitle("");
-                    if(field.equals("review")) fav.setReview("");
-
-                    return favoritesRepo.save(fav);
-                })
-                .orElseGet(() -> {
-                    newFavorites.setId(id);
-                    return favoritesRepo.save(newFavorites);
-                });
     }
 }
